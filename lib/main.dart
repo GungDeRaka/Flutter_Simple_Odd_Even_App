@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -32,10 +34,11 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final TextEditingController _controller = TextEditingController();
-  void showSnackbar() {
+
+  void showSnackbar(){
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
       content: Text("INPUT ANGKA BROOOWW.."),
-      duration: Duration(seconds: 3),
+      duration: Duration(seconds: 1),
     ));
   }
 
@@ -84,10 +87,10 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(backgroundColor: biru),
-              onPressed: () {
+              onPressed: () async {
                 try {
                 dialog(context);
-                }on Exception {showSnackbar();}
+                }on Exception{showSnackbar();}
               },
               child: const Text("Ganjil / Genap?",style: TextStyle(fontSize: 16,color: blacky),),
             ),
@@ -96,6 +99,8 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
+
+
 
   Future<dynamic> dialog(BuildContext context) {
     return showDialog(
