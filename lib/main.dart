@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 
 void main() {
@@ -33,13 +31,23 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
   final TextEditingController _controller = TextEditingController();
 
-  void showSnackbar(){
+  void showSnackbar() {
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
       content: Text("INPUT ANGKA BROOOWW.."),
       duration: Duration(seconds: 1),
     ));
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _controller.addListener(() {
+      setState(() {
+      });
+    });
   }
 
   @override
@@ -58,24 +66,23 @@ class _MyHomePageState extends State<MyHomePage> {
             navy,
             magenta,
             biru,
-            
           ], begin: Alignment.bottomLeft, end: Alignment.topCenter),
         ),
         padding: const EdgeInsets.all(16),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextField(cursorColor: blacky,
+            TextField(
+              cursorColor: blacky,
               textAlign: TextAlign.center,
-              style: const TextStyle(color:navy, fontSize: 55),
+              style: const TextStyle(color: navy, fontSize: 55),
               controller: _controller,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
-                //hintText: "input sebuah angka",
                 contentPadding: const EdgeInsets.all(16),
                 isCollapsed: true,
                 filled: true,
-                fillColor:  biru,
+                fillColor: biru,
                 hoverColor: pinky,
                 //hintStyle: TextStyle(color: pinky,fontSize: 40),
                 border:
@@ -87,20 +94,19 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(backgroundColor: biru),
-              onPressed: () async {
-                try {
-                dialog(context);
-                }on Exception{showSnackbar();}
+              onPressed: () {
+                  dialog(context);
               },
-              child: const Text("Ganjil / Genap?",style: TextStyle(fontSize: 16,color: blacky),),
+              child: const Text(
+                "Ganjil / Genap?",
+                style: TextStyle(fontSize: 16, color: blacky),
+              ),
             ),
           ],
         ),
       ),
     );
   }
-
-
 
   Future<dynamic> dialog(BuildContext context) {
     return showDialog(
@@ -112,7 +118,7 @@ class _MyHomePageState extends State<MyHomePage> {
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
             content: Text(
-              "${_controller.text} merupakan Bilangan ${(int.parse(_controller.text) % 2 == 0) ? 'Genap' : 'Ganjil'}",
+              "${_controller.text} merupakan Bilangan ${int.parse(_controller.text) % 2 == 0 ? 'Genap' : 'Ganjil'}",
               style: const TextStyle(
                   color: biru, fontSize: 24, fontWeight: FontWeight.w500),
             ),
@@ -133,3 +139,4 @@ class _MyHomePageState extends State<MyHomePage> {
         });
   }
 }
+//{(int.parse(_controller.text) % 2 == 0) ? 'Genap' : 'Ganjil'}
