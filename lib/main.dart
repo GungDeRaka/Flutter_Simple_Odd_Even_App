@@ -31,22 +31,47 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   final TextEditingController _controller = TextEditingController();
 
-  void showSnackbar() {
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-      content: Text("INPUT ANGKA BROOOWW.."),
-      duration: Duration(seconds: 1),
-    ));
+  Widget? myDialogText() {
+    Widget? text;
+    if (_controller.text != null) {
+      try {
+        if (int.parse(_controller.text) is FormatException) {
+          text = const Text(
+          "Inputanmu bukan angka!. Coba input ulang berupa angka",
+          style:
+              TextStyle(color: biru, fontSize: 24, fontWeight: FontWeight.w500),
+        );
+        } else if (int.parse(_controller.text).isOdd) {
+          text = Text(
+            "${_controller.text} merupakan Bilangan Ganjil",
+            style: const TextStyle(
+                color: biru, fontSize: 24, fontWeight: FontWeight.w500),
+          );
+        } else if (int.parse(_controller.text).isEven) {
+          text = Text(
+            "${_controller.text} merupakan Bilangan Genap",
+            style: const TextStyle(
+                color: biru, fontSize: 24, fontWeight: FontWeight.w500),
+          );
+        }
+      } on FormatException {
+        text = const Text(
+          "Inputanmu bukan angka!. Coba input ulang berupa angka",
+          style:
+              TextStyle(color: biru, fontSize: 24, fontWeight: FontWeight.w500),
+        );
+      }
+    }
+    return text;
   }
 
   @override
   void initState() {
     super.initState();
     _controller.addListener(() {
-      setState(() {
-      });
+      setState(() {});
     });
   }
 
@@ -95,7 +120,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ElevatedButton(
               style: ElevatedButton.styleFrom(backgroundColor: biru),
               onPressed: () {
-                  dialog(context);
+                dialog(context);
               },
               child: const Text(
                 "Ganjil / Genap?",
@@ -117,11 +142,7 @@ class _MyHomePageState extends State<MyHomePage> {
             alignment: Alignment.center,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-            content: Text(
-              "${_controller.text} merupakan Bilangan ${int.parse(_controller.text) % 2 == 0 ? 'Genap' : 'Ganjil'}",
-              style: const TextStyle(
-                  color: biru, fontSize: 24, fontWeight: FontWeight.w500),
-            ),
+            content: myDialogText(),
             title: const Text("Wahhh..,Ternyataa"),
             titleTextStyle: const TextStyle(
                 color: biru, fontSize: 28, fontWeight: FontWeight.bold),
